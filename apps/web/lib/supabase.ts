@@ -10,7 +10,7 @@ let client: SupabaseClient | null = null;
 function getClient(): SupabaseClient {
   if (!isStorageConfigured) {
     throw new Error(
-      "이미지 업로드가 설정되지 않았습니다. env.md의 '1-C Storage' 단계(버킷 생성 + NEXT_PUBLIC_SUPABASE_URL/ANON_KEY)를 완료해주세요."
+      "이미지 업로드가 설정되지 않았습니다. NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY 환경변수를 설정해주세요."
     );
   }
   if (!client) client = createClient(URL!, ANON!);

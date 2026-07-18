@@ -30,4 +30,4 @@ npm workspaces 모노레포: `apps/web`(Next.js 프론트) + `apps/server`(Apoll
 - Prisma 스키마 변경 시 → `npm run prisma:migrate` 후 `npm run prisma:generate` 반영.
 
 ## 참고 문서
-- `docs/기획서.md` — 서비스 기획 / `docs/개발계획.md` — 단계별 로드맵 / `env.md` — 배포·환경변수 셋업
+- `docs/기획서.md` — 서비스 기획 / `docs/개발계획.md` — 단계별 로드맵

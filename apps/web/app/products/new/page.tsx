@@ -57,7 +57,7 @@ export default function NewProductPage() {
     }
     if (files.length > 0 && !isStorageConfigured) {
       setError(
-        "이미지 업로드가 아직 설정되지 않았어요. 이미지를 빼고 등록하거나, env.md의 '1-C Storage' 단계를 완료해주세요."
+        "이미지 업로드가 아직 설정되지 않았어요. 이미지를 빼고 등록해주세요."
       );
       return;
     }
@@ -100,8 +100,7 @@ export default function NewProductPage() {
         {!isStorageConfigured && (
           <div className="mt-4 rounded-lg bg-carrot-light px-4 py-3 text-sm text-ink">
             💡 이미지 업로드(Storage)가 아직 설정되지 않았어요. 지금은{" "}
-            <b>이미지 없이</b> 등록할 수 있고, 설정은 <code>env.md</code>의
-            &quot;1-C Storage&quot; 단계를 참고하세요.
+            <b>이미지 없이</b> 등록할 수 있어요.
           </div>
         )}
 
