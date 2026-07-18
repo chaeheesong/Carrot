@@ -23,3 +23,6 @@ npm-debug.log*
 .vercel
 .turbo
 coverage/
+
+# TypeScript 빌드 캐시
+*.tsbuildinfo
