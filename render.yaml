@@ -1,0 +1,31 @@
+# Render Blueprint — 백엔드(GraphQL + WebSocket) 배포
+# 사용법: Render → New → Blueprint → 이 저장소 연결 → sync:false 항목(비밀)만 입력
+services:
+  - type: web
+    name: dongne-jangteo-server
+    runtime: node
+    plan: free
+    region: singapore
+    # 모노레포 루트에서 워크스페이스 명령으로 빌드/실행 (npm workspaces 안전)
+    # DB 스키마는 이미 마이그레이션 완료 → 여기선 build(prisma generate + tsc)만 수행
+    buildCommand: npm install && npm run build:server
+    startCommand: npm run start:server
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      # DB 비밀번호 (원본 그대로). URL의 __PW__ 자리에 코드가 URL-인코딩해 주입
+      - key: DB_PASSWORD
+        sync: false
+      # Supabase pooling URL (6543), 비번 자리는 __PW__ 유지
+      - key: DATABASE_URL
+        sync: false
+      # Supabase direct/session URL (5432), 비번 자리는 __PW__ 유지
+      - key: DIRECT_URL
+        sync: false
+      # JWT 서명 키 — Render가 자동 생성
+      - key: JWT_SECRET
+        generateValue: true
+      # 프론트 오리진(CORS). 처음엔 *로 두고, Vercel 배포 후 실제 URL로 교체 권장
+      - key: CORS_ORIGIN
+        value: "*"

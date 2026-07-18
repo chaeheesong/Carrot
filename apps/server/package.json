@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "prisma generate && tsc -p tsconfig.json",
-    "start": "node dist/index.js",
+    "start": "node dist/src/index.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "node scripts/with-env.mjs npx prisma migrate dev",
     "prisma:deploy": "node scripts/with-env.mjs npx prisma migrate deploy",
