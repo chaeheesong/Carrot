@@ -1,0 +1,21 @@
+{
+  "name": "dongne-jangteo",
+  "private": true,
+  "version": "0.1.0",
+  "description": "동네장터 — 우리 동네 중고거래 (GraphQL 데모)",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:server": "npm run dev -w apps/server",
+    "dev:web": "npm run dev -w apps/web",
+    "build:server": "npm run build -w apps/server",
+    "build:web": "npm run build -w apps/web",
+    "prisma:generate": "npm run prisma:generate -w apps/server",
+    "prisma:migrate": "npm run prisma:migrate -w apps/server",
+    "prisma:seed": "npm run seed -w apps/server"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
