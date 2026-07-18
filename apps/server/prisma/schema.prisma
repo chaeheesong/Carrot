@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum ProductStatus {
+  SELLING // 판매중
+  SOLD // 거래완료
+}
+
+enum Category {
+  DIGITAL // 디지털기기
+  FURNITURE // 가구/인테리어
+  APPLIANCE // 생활가전
+  KIDS // 유아동
+  ETC // 기타
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  password     String // bcrypt 해시
+  nickname     String
+  neighborhood String   @default("서울시 강남구")
+  profileImage String?
+  createdAt    DateTime @default(now())
+
+  products     Product[]
+  likes        Like[]
+  comments     Comment[]
+  buyerRooms   ChatRoom[] @relation("buyer")
+  sellerRooms  ChatRoom[] @relation("seller")
+  messages     Message[]
+
+  @@index([neighborhood])
+}
+
+model Product {
+  id           String        @id @default(cuid())
+  title        String
+  description  String        @default("")
+  price        Int
+  status       ProductStatus @default(SELLING)
+  category     Category      @default(ETC)
+  neighborhood String
+  createdAt    DateTime      @default(now())
+
+  sellerId String
+  seller   User   @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
+  images    ProductImage[]
+  likes     Like[]
+  comments  Comment[]
+  chatRooms ChatRoom[]
+
+  @@index([neighborhood, category, createdAt])
+  @@index([sellerId])
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  url       String
+  order     Int     @default(0)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model Like {
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([userId, productId])
+  @@index([productId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model ChatRoom {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  buyerId   String
+  buyer     User    @relation("buyer", fields: [buyerId], references: [id], onDelete: Cascade)
+  sellerId  String
+  seller    User    @relation("seller", fields: [sellerId], references: [id], onDelete: Cascade)
+
+  messages Message[]
+
+  @@unique([productId, buyerId]) // 상품당 구매자별 1개 방
+  @@index([buyerId])
+  @@index([sellerId])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  readAt    DateTime?
+  createdAt DateTime @default(now())
+
+  chatRoomId String
+  chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
+  senderId   String
+  sender     User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([chatRoomId, createdAt])
+}
