@@ -26,3 +26,6 @@ coverage/
 
 # TypeScript 빌드 캐시
 *.tsbuildinfo
+
+# env 템플릿도 제외 (인프라 정보 비노출)
+.env.example
