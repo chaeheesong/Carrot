@@ -14,8 +14,10 @@
 
 <br>
 
-* **서비스 링크:** _배포 예정 (Vercel)_
-* **GraphQL API:** _배포 예정 (Render · Apollo Server)_
+* **🔗 서비스:** [carrot-web-rose.vercel.app](https://carrot-web-rose.vercel.app)
+* **GraphQL API:** [dongne-jangteo-server.onrender.com/graphql](https://dongne-jangteo-server.onrender.com/graphql)
+
+> ⏳ 백엔드가 Render 무료 티어라, 첫 접속 시 서버가 깨어나는 데 **30~60초** 걸릴 수 있어요. (이후엔 즉시 응답)
 
 <br>
 
